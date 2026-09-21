@@ -1,51 +1,104 @@
 # Google Play Analytics Pipeline
 
-A portfolio-ready Python pipeline that reads Google Play Console statistics from a Google Cloud Storage export, normalizes and aggregates the data, and prepares a monthly dataset for Power BI or other BI tools.
+**Python ETL pipeline for Google Play analytics using Google Cloud Storage, pandas, and Power BI-ready transformations.**
 
-## What this demonstrates
+**Skills:** Python • Google Cloud Storage • pandas • ETL • Data Transformation • Data Modeling • Power BI • Automation
 
-- Google Cloud Storage integration with a service account
-- Google Play Console statistics export processing
-- Automated CSV ingestion
-- Data cleaning and type conversion with pandas
-- Monthly aggregation logic
-- BI-ready dataset preparation
-- Secure environment-based configuration
+## Business Problem
+
+Mobile app performance data is often distributed across platform-specific exports and requires recurring manual preparation before it can be used in dashboards.
+
+This project automates the ingestion and transformation of Google Play analytics data into a standardized monthly dataset designed for BI reporting.
 
 ## Architecture
 
+![Google Play Analytics Pipeline Architecture](docs/architecture.svg)
+
 ```text
-Google Play Console statistics export
-        ↓
-Google Cloud Storage
-        ↓
-Python ingestion + transformation
-        ↓
-Monthly app-level dataset
-        ↓
-Power BI / Excel / database / API
+Google Play Console → Google Cloud Storage → Python ETL → Monthly Dataset → Power BI
 ```
 
-## Aggregation logic
+## Key Features
 
-Daily install/uninstall measures are summed by month. Snapshot-style measures such as active device installs use a monthly maximum rather than being summed.
+- Automated ingestion from Google Cloud Storage
+- Processing of Google Play Console statistics exports
+- CSV normalization and type conversion
+- Monthly aggregation of app performance metrics
+- Separate treatment of cumulative and snapshot metrics
+- Environment-based configuration
+- BI-ready structured output
 
-## Setup
+## Key Engineering Decisions
 
-1. Install dependencies:
+### Snapshot vs transactional metrics
+
+Not every metric should be aggregated the same way.
+
+- Transactional measures such as installs and uninstalls are **summed** across the month.
+- Snapshot-style measures such as active devices use the **monthly maximum** to avoid double counting.
+
+This distinction is important when preparing operational metrics for executive dashboards.
+
+### Configuration separated from code
+
+Credentials, project IDs, bucket names, and environment-specific values are loaded from environment variables rather than hard-coded into the application.
+
+### Reusable transformation layer
+
+The pipeline converts raw export columns into normalized field names and reusable monthly reporting structures so the output can feed Power BI, Excel, a database, or another reporting layer.
+
+## Sample Output
+
+| Month | App | Metric | Value |
+|---|---|---|---:|
+| 2026-01 | Demo App A | Downloads | 12,450 |
+| 2026-01 | Demo App A | Active Devices | 8,920 |
+| 2026-02 | Demo App A | Downloads | 13,810 |
+| 2026-02 | Demo App A | Active Devices | 9,340 |
+| 2026-02 | Demo App B | Downloads | 6,210 |
+
+*Example values are illustrative only.*
+
+## What This Project Demonstrates
+
+- Building a cloud-to-BI analytics pipeline
+- Working with Google Cloud Storage programmatically
+- Automating repetitive data preparation
+- Designing metric-specific aggregation rules
+- Preparing datasets for Power BI consumption
+- Applying secure configuration practices
+- Translating raw platform exports into business-ready reporting data
+
+## Project Structure
+
+```text
+google-play-analytics-pipeline/
+├── google_play_pipeline.py
+├── list_bucket_folders.py
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── docs/
+│   └── architecture.svg
+└── README.md
+```
+
+## Getting Started
+
+Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Configure these environment variables using `.env.example` as a reference:
+Configure the required environment variables using `.env.example` as a reference:
 
 - `GOOGLE_APPLICATION_CREDENTIALS`
 - `GCP_PROJECT_ID`
 - `PLAY_STATS_BUCKET`
 - `PLAY_INSTALLS_PREFIX`
 
-3. Run:
+Run the pipeline:
 
 ```bash
 python google_play_pipeline.py
@@ -53,8 +106,15 @@ python google_play_pipeline.py
 
 ## Security
 
-Never commit service-account JSON files, real bucket names, production project IDs, customer data, or credentials.
+Do not commit:
 
-## Portfolio note
+- Service-account JSON files
+- Production bucket names
+- Production project IDs
+- Real customer or user data
+- API keys or credentials
+- Private configuration files
+
+## Portfolio Note
 
 This repository is a sanitized demonstration of a production analytics pattern. Organization-specific app names, package identifiers, storage details, credentials, and endpoints have been replaced with generic examples.
