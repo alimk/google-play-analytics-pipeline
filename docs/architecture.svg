@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220">
+  <style>
+    .box{fill:#f6f8fa;stroke:#d0d7de;stroke-width:2;rx:14;ry:14}
+    .t{font:600 22px Arial,sans-serif;fill:#24292f}
+    .s{font:16px Arial,sans-serif;fill:#57606a}
+    .a{font:700 28px Arial,sans-serif;fill:#0969da}
+  </style>
+  <rect class="box" x="20" y="55" width="210" height="110"/>
+  <text class="t" x="125" y="95" text-anchor="middle">Google Play</text>
+  <text class="s" x="125" y="125" text-anchor="middle">Statistics export</text>
+  <text class="a" x="250" y="120">→</text>
+  <rect class="box" x="290" y="55" width="210" height="110"/>
+  <text class="t" x="395" y="95" text-anchor="middle">Google Cloud</text>
+  <text class="s" x="395" y="125" text-anchor="middle">Storage bucket</text>
+  <text class="a" x="520" y="120">→</text>
+  <rect class="box" x="560" y="55" width="210" height="110"/>
+  <text class="t" x="665" y="95" text-anchor="middle">Python ETL</text>
+  <text class="s" x="665" y="125" text-anchor="middle">pandas transform</text>
+  <text class="a" x="790" y="120">→</text>
+  <rect class="box" x="830" y="55" width="210" height="110"/>
+  <text class="t" x="935" y="95" text-anchor="middle">Monthly Dataset</text>
+  <text class="s" x="935" y="125" text-anchor="middle">BI-ready output</text>
+  <text class="a" x="1060" y="120">→</text>
+  <rect class="box" x="1100" y="55" width="80" height="110"/>
+  <text class="t" x="1140" y="102" text-anchor="middle">Power</text>
+  <text class="t" x="1140" y="130" text-anchor="middle">BI</text>
+</svg>
